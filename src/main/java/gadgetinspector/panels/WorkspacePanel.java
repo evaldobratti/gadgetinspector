@@ -10,6 +10,9 @@ import gadgetinspector.SelfProvider;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
 
 
 public class WorkspacePanel {
@@ -48,11 +51,13 @@ public class WorkspacePanel {
         completion.setParameterAssistanceEnabled(true);
         completion.install(workspaceTextArea);
 
+        final TranscriptOutputStream output = new TranscriptOutputStream();
+
         new InspectorEventCallback(workspaceTextArea) {
 
             @Override
             public void inspect() {
-                inspector.inspect(selfProvider.getSelf(), getCodeToExecute());
+                inspector.inspect(selfProvider.getSelf(), getCodeToExecute(), output);
             }
 
             @Override
@@ -62,7 +67,7 @@ public class WorkspacePanel {
                     @Override
                     protected Object doInBackground() throws Exception {
                         workspaceTextArea.getRootPane().setEnabled(false);
-                        inspector.getExecutor().execute(selfProvider.getSelf(), getCodeToExecute());
+                        inspector.getExecutor().execute(selfProvider.getSelf(), getCodeToExecute(), output);
                         workspaceTextArea.getRootPane().setEnabled(true);
                         return null;
                     }
@@ -87,5 +92,17 @@ public class WorkspacePanel {
         return split;
     }
 
+    private class TranscriptOutputStream extends OutputStream {
+
+        @Override
+        public void write(int b) throws IOException {
+            throw new RuntimeException("It should not be called");
+        }
+
+        @Override
+        public void write(byte[] bytes, int offset, int length) throws IOException {
+            transcriptTextArea.append(new String(Arrays.copyOfRange(bytes, offset, length)));
+        }
+    }
 
 }

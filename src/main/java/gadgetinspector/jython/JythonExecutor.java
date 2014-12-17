@@ -1,6 +1,5 @@
 package gadgetinspector.jython;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 import gadgetinspector.Executor;
@@ -11,85 +10,56 @@ import org.python.util.PythonInterpreter;
 
 public class JythonExecutor implements Executor {
 
-    private JythonContext contexto;
+    private final JythonContext contexto;
+
+    private final PythonInterpreter interpretador;
 
     public JythonExecutor(final JythonContext contexto) {
         this.contexto = contexto;
-        interpretador = new PythonInterpreter(contexto);
-	}
+        this.interpretador = new PythonInterpreter(contexto);
+    }
 
-	@Override
-	public void execute(final Object receiver, final String comando) {
-		interpretador.set("self", receiver);
-		execute(comando);
-	}
+    @Override
+    public void execute(final Object receiver, final String comando, OutputStream output) {
+        executeBlock(receiver, new F0() {
+            @Override
+            public Object apply() {
+                interpretador.exec(comando);
+                return null;
+            }
+        }, output);
+    }
 
-	@Override
-	public Object inspect(final Object receiver, final String comando) {
-		try {
-			interpretador.set("self", receiver);
-			return inspect(comando);
-		} catch (final PyException e) {
-			throw new RuntimeException(formattedMessageForPyException(e), e);
-		} catch (final Exception e) {
-			throw new RuntimeException(formattedMessageForRawException(e), e);
-		}
-	}
-
-
-	private final PythonInterpreter interpretador;
-	private OutputStream out;
-
-	public void setOut(final OutputStream stream) {
-		this.out = stream;
-	}
-
-	private void execute(final String code) {
-		try {
-//			interpretador.setOut(out);
-			interpretador.exec(code);
-		} catch (final PyException e) {
-			printIntoOutStream(formattedMessageForPyException(e));
-			e.printStackTrace();
-		} catch (final Exception e) {
-			printIntoOutStream(formattedMessageForRawException(e));
-			e.printStackTrace();
-		}
-		finally {
-			interpretador.setOut(System.out);
-		}
-	}
-
-	protected String formattedMessageForRawException(final Exception e) {
-		return formatErrorMessage(e.getClass().getSimpleName(), e.getMessage());
-	}
-
-	protected String formattedMessageForPyException(final PyException e) {
-		if (e.value instanceof PyString)
-			return formatErrorMessage("InternalPythonError", (String)((PyString)e.value.__tojava__(PyString.class)).__tojava__(String.class));
-
-		return formatErrorMessage(String.valueOf(e.value), e.toString());
-	}
-
-	private void printIntoOutStream(final String message) {
-		try {
-			if (out != null)
-				out.write((message + "\n").getBytes());
-		} catch (final IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-	private String formatErrorMessage(final String className, final String message) {
-		return String.format("Errors had occurred: %s | %s", className, message);
-	}
-
-	private Object inspect(final String code) {
-		return interpretador.eval(code).__tojava__(Object.class);
-	}
+    @Override
+    public Object inspect(final Object receiver, final String comando, OutputStream output) {
+        return executeBlock(receiver, new F0() {
+            @Override
+            public Object apply() {
+                return interpretador.eval(comando).__tojava__(Object.class);
+            }
+        }, output);
+    }
 
     @Override
     public JythonContext getContext() {
         return contexto;
+    }
+
+    private static interface F0 {
+        Object apply();
+    }
+    private Object executeBlock(Object receiver, F0 block, OutputStream output) {
+        try {
+            interpretador.setOut(output);
+            interpretador.setErr(output);
+            interpretador.set("self", receiver);
+            return block.apply();
+        } catch (final PyException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            interpretador.setOut(System.out);
+            interpretador.setErr(System.err);
+        }
     }
 }

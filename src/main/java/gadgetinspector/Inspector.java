@@ -1,6 +1,7 @@
 package gadgetinspector;
 
 import javax.swing.*;
+import java.io.OutputStream;
 
 public abstract class Inspector {
 
@@ -27,8 +28,8 @@ public abstract class Inspector {
 		return executor;
 	}
 
-	public void inspect(final Object self, final String codeToExecute) {
-		showFrame(getExecutor().inspect(self, codeToExecute));
+	public void inspect(final Object self, final String codeToExecute, OutputStream output) {
+		showFrame(getExecutor().inspect(self, codeToExecute, output));
 	}
 
 	public void inspect(final Object self) {

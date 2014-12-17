@@ -3,10 +3,7 @@ package gadgetinspector.jython;
 
 import gadgetinspector.Context;
 import gadgetinspector.VariableSolver;
-import org.python.core.PyJavaType;
-import org.python.core.PyList;
-import org.python.core.PyObject;
-import org.python.core.PyStringMap;
+import org.python.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,9 @@ public class JythonContext extends PyObject implements Context {
 	private final PyStringMap locals;
 	private final VariableSolver variableSolver;
 
+    static {
+        Options.respectJavaAccessibility = false;
+    }
 
 	public JythonContext(final VariableSolver variableSolver) {
 		this.variableSolver = variableSolver;
@@ -36,8 +36,12 @@ public class JythonContext extends PyObject implements Context {
 	@Override
 	public PyObject __finditem__(final String key) {
 		final Object solve = variableSolver.solve(key);
-		if (solve != null)
-			return PyJavaType.wrapJavaObject(solve);
+		if (solve != null) {
+            if (solve instanceof Class<?>)
+                return PyJavaType.fromClass((Class<?>) solve);
+            else
+                return PyJavaType.wrapJavaObject(solve);
+        }
 		return locals.__finditem__(key);
 	}
 
