@@ -3,6 +3,7 @@ package gadgetinspector.jython;
 import java.io.OutputStream;
 
 import gadgetinspector.Executor;
+import gadgetinspector.F0;
 import org.python.core.PyException;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
@@ -45,9 +46,6 @@ public class JythonExecutor implements Executor {
         return contexto;
     }
 
-    private static interface F0 {
-        Object apply();
-    }
     private Object executeBlock(Object receiver, F0 block, OutputStream output) {
         try {
             interpretador.setOut(output);

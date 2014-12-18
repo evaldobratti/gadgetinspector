@@ -2,9 +2,12 @@ package gadgetinspector.groovy;
 
 import gadgetinspector.Context;
 import gadgetinspector.defaults.ClasspathVariableSolver;
+import gadgetinspector.reflection.ReflectionUtils;
 import groovy.lang.Binding;
+import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.codehaus.groovy.tools.shell.Groovysh;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,17 @@ class GroovyContext extends Binding implements Context {
 
     @Override
     public List<String> getPossibleMethodsOf(String subject) {
-        return new ArrayList<String>();
+        Object object = getVariable(subject);
+        if (object == null)
+            object = getProperty(subject);
+
+        if (object == null)
+            return new ArrayList<String>();
+
+        List<Method> methods = ReflectionUtils.loadMethods(object.getClass());
+        List<String> methodsName = new ArrayList<String>();
+        for (Method method : methods)
+            methodsName.add(method.getName());
+        return methodsName;
     }
 }

@@ -1,6 +1,7 @@
 package gadgetinspector.reflection;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,5 +19,18 @@ public class ReflectionUtils {
         fields.addAll(loadFields(clazz.getSuperclass()));
 
         return fields;
+    }
+
+    public static List<Method> loadMethods(Class<? extends Object> clazz) {
+        if (clazz == Object.class)
+            return Collections.EMPTY_LIST;
+
+        final List<Method> methods = new ArrayList<Method>(Arrays.asList(clazz.getDeclaredMethods()));
+        for (final Method field : methods)
+            field.setAccessible(true);
+
+        methods.addAll(loadMethods(clazz.getSuperclass()));
+
+        return methods;
     }
 }
