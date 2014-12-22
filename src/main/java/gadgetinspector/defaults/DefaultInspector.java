@@ -1,15 +1,14 @@
-package gadgetinspector.groovy;
+package gadgetinspector.defaults;
 
+import gadgetinspector.Executor;
 import gadgetinspector.Inspector;
-import gadgetinspector.defaults.ObjectJFrame;
-import gadgetinspector.defaults.WorkspaceJFrame;
 
 import javax.swing.*;
 
-public class GroovyMain extends Inspector {
+public abstract class DefaultInspector extends Inspector {
 
-    public GroovyMain() {
-        super(new GroovyExecutor(new GroovyContext()));
+    public DefaultInspector(Executor executor) {
+        super(executor);
     }
 
     @Override
@@ -23,9 +22,4 @@ public class GroovyMain extends Inspector {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        new GroovyMain().start();
-    }
 }
-

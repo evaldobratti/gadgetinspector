@@ -26,10 +26,15 @@ class GroovyExecutor implements Executor {
 
 
     @Override
+    public void setSelf(Object self) {
+        shell.setVariable("self", self);
+    }
+
+    @Override
     public Object inspect(Object self, final String codeToExecute, OutputStream output) {
         Object retorno = null;
         try {
-            shell.setVariable("self", self);
+            setSelf(self);
             shell.evaluate("interceptor.start();");
             retorno = shell.evaluate(codeToExecute);
         } catch (MultipleCompilationErrorsException e) {
@@ -39,8 +44,6 @@ class GroovyExecutor implements Executor {
 
                 if (solve instanceof Class<?>) {
                     Class<?> clazz = (Class<?>) solve;
-                    System.out.println("resolvendo classe " + clazz.getSimpleName());
-
                     return inspect(self, "import " + clazz.getCanonicalName() + "\n" + codeToExecute, output);
                 }
             } else {

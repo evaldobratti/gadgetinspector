@@ -1,5 +1,7 @@
 package gadgetinspector;
 
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+
 import javax.swing.*;
 import java.io.OutputStream;
 
@@ -38,5 +40,13 @@ public abstract class Inspector {
 
     public Context getContext() {
         return executor.getContext();
+    }
+
+    public void setSelf(Object self) {
+        executor.setSelf(self);
+    }
+
+    public String getSyntaxStyle() {
+        return SyntaxConstants.SYNTAX_STYLE_NONE;
     }
 }

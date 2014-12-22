@@ -46,11 +46,16 @@ public class JythonExecutor implements Executor {
         return contexto;
     }
 
+    @Override
+    public void setSelf(Object self) {
+        interpretador.set("self", self);
+    }
+
     private Object executeBlock(Object receiver, F0 block, OutputStream output) {
         try {
             interpretador.setOut(output);
             interpretador.setErr(output);
-            interpretador.set("self", receiver);
+            setSelf(receiver);
             return block.apply();
         } catch (final PyException e) {
             e.printStackTrace();

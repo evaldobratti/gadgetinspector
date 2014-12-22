@@ -10,6 +10,8 @@ import gadgetinspector.SelfProvider;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
@@ -46,6 +48,13 @@ public class WorkspacePanel {
         workspaceTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
         workspaceTextArea.setCodeFoldingEnabled(true);
         workspaceTextArea.setAntiAliasingEnabled(true);
+
+        workspaceTextArea.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                inspector.setSelf(selfProvider.getSelf());
+            }
+        });
 
         final AutoCompletion completion = new AutoCompletion(new InspectorCompletion(inspector.getContext()));
         completion.setParameterAssistanceEnabled(true);

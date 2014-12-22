@@ -1,28 +1,26 @@
 package gadgetinspector.jython;
 
 import gadgetinspector.defaults.ClasspathVariableSolver;
+import gadgetinspector.defaults.DefaultInspector;
 import gadgetinspector.defaults.ObjectJFrame;
 import gadgetinspector.defaults.WorkspaceJFrame;
 import gadgetinspector.Inspector;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
 
-public class JythonInspector extends Inspector {
-
+public class JythonInspector extends DefaultInspector {
 
     public JythonInspector() {
         super(new JythonExecutor(new JythonContext(new ClasspathVariableSolver())));
     }
 
     @Override
-    public void showFrame(final Object object) {
-        new ObjectJFrame(object, this).getFrame().setVisible(true);
+    public String getSyntaxStyle() {
+        return SyntaxConstants.SYNTAX_STYLE_PYTHON;
     }
 
-    @Override
-    public void showInitialFrame() {
-        JFrame frame = new WorkspaceJFrame("", this).getFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+    public static void main(final String[] args) {
+        new JythonInspector().start();
     }
 }

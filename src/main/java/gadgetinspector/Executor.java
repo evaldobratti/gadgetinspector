@@ -11,4 +11,6 @@ public interface Executor {
 	void execute(Object self, String codeToExecute, OutputStream output);
 
     Context getContext();
+
+    void setSelf(Object self);
 }
