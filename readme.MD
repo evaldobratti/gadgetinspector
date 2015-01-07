@@ -1,4 +1,4 @@
-Gadget Inspector
+Inspector Gadget
 ====
 
 The purpose of this project is to help you debugging and analysing your objects in runtime, even if you haven't lanched your applicatin on debug mode on your IDE, and even if you're using an already generated build of your app.
