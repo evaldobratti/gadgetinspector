@@ -1,6 +1,7 @@
 package gadgetinspector.panels.treenode;
 
-import gadgetinspector.reflection.ReflectionUtils;
+import com.google.common.base.Predicates;
+import org.reflections.ReflectionUtils;
 
 import java.lang.reflect.Field;
 
@@ -17,7 +18,7 @@ class ObjectInspectorNode<T extends Object> extends InspectorTreeNode<T> {
 
 	@SuppressWarnings("unused")
 	protected void loadFields() {
-		for (final Field field : ReflectionUtils.loadFields(getObject().getClass())) {
+		for (final Field field : ReflectionUtils.getAllFields(getObject().getClass(), Predicates.alwaysTrue())) {
 			try {
 				final String prefix = field.getDeclaringClass() == getObject().getClass() ? "" : field.getDeclaringClass().getSimpleName() + ".";
 				final Object valor = field.get(getObject());

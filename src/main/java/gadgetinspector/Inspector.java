@@ -1,6 +1,7 @@
 package gadgetinspector;
 
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.reflections.ReflectionUtils;
 
 import javax.swing.*;
 import java.io.OutputStream;

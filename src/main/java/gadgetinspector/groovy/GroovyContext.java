@@ -1,15 +1,15 @@
 package gadgetinspector.groovy;
 
+import com.google.common.base.Predicates;
 import gadgetinspector.Context;
 import gadgetinspector.defaults.ClasspathVariableSolver;
-import gadgetinspector.reflection.ReflectionUtils;
 import groovy.lang.Binding;
-import org.codehaus.groovy.control.customizers.ImportCustomizer;
-import org.codehaus.groovy.tools.shell.Groovysh;
+import org.reflections.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 class GroovyContext extends Binding implements Context {
 
@@ -40,7 +40,7 @@ class GroovyContext extends Binding implements Context {
         if (object == null)
             return new ArrayList<String>();
 
-        List<Method> methods = ReflectionUtils.loadMethods(object.getClass());
+        Set<Method> methods = ReflectionUtils.getAllMethods(object.getClass(), Predicates.alwaysTrue());
         List<String> methodsName = new ArrayList<String>();
         for (Method method : methods)
             methodsName.add(method.getName());

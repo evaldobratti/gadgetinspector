@@ -36,6 +36,8 @@ public class ClasspathVariableSolver implements VariableSolver {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        } else {
+            System.out.println("Ocorruncies of " + variableName + " : " + qualifiedNames);
         }
         return null;
     }
