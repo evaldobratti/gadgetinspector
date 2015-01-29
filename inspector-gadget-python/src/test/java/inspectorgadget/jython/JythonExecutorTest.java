@@ -101,7 +101,7 @@ public class JythonExecutorTest {
 
         assertEquals("Traceback (most recent call last):\n" +
                 "  File \"<string>\", line 1, in <module>\n" +
-                "AttributeError: 'gadgetinspector.jython.JythonExecutorTest$Dummy' object has no attribute 'nonExistingMethod'\n", outputString.toString());
+                "AttributeError: 'inspectorgadget.jython.JythonExecutorTest$Dummy' object has no attribute 'nonExistingMethod'\n", outputString.toString());
     }
 
     private void accumulateWriteCallsOn(final StringBuilder builder) throws IOException {
