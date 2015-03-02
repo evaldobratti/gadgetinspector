@@ -26,7 +26,7 @@ for Python Inspector version.
 
 The inspector will try to solve the imports that your code may use, so, you don't have to explicitly declare imports statements, inspector will search in the classpath, and if only one class with the required name is found, it will solve that dependency for you.
 
-You can reference the object that your inspector is referencing with the 'self'\* keyword.  
+You can reference the object that your inspector is referencing with the 'self'\* keyword.
 *: In groovy too, unfortunately you can't change 'this' reference in groovy scripts  =(
 
 ##How do I extent it?
