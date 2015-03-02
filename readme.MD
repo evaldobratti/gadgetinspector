@@ -1,4 +1,4 @@
-#Gadget Inspector
+#Gadget Inspector [![Build Status](https://travis-ci.org/evaldobratti/inspectorgadget.svg?branch=master)](https://travis-ci.org/evaldobratti/inspectorgadget)
 ##Introduction
 The purpose of this project is to help you debugging and analysing your objects in runtime, even if you haven't lanched your applicatin on debug mode on your IDE, and even if you're using an already generated build of your app.
 You will inspect and execute some codes, inspect the states of objects, values of their fields, relationships, call their methods, execute queries, update databases, everything that you could do programmatically in your app.
