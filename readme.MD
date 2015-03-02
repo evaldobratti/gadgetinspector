@@ -22,13 +22,12 @@ for Groovy Inspector, or
 ```java
 new JythonInspector().start();
 ```
-
 for Python Inspector version.
 
 The inspector will try to solve the imports that your code may use, so, you don't have to explicitly declare imports statements, inspector will search in the classpath, and if only one class with the required name is found, it will solve that dependency for you.
 
-You can reference the object that your inspector is referencing with the 'self'* keyword. 
+You can reference the object that your inspector is referencing with the 'self'\* keyword.
 *: In groovy too, unfortunately you can't change 'this' reference in groovy scripts  =(
 
 ##How do I extent it?
-If you want to use another language that is not currently implemented, you can just extend [inspectorgadget.Executor](/src/main/java/inspectorgadget/Executor.java) and implement the abstract methods, then pass this object to [inspectorgadget.DefaultInspector](src/main/java/inspectorgadget/defaults/DefaultInspector.java).
+If you want to use another language that is not currently implemented, you can just extend [inspectorgadget.Executor](https://github.com/evaldobratti/inspectorgadget/blob/master/inspector-gadget-core/src/main/java/inspectorgadget/Executor.java) and implement the abstract methods, then pass this object to [inspectorgadget.DefaultInspector](https://github.com/evaldobratti/inspectorgadget/blob/master/inspector-gadget-core/src/main/java/inspectorgadget/defaults/DefaultInspector.java).
