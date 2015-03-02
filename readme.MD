@@ -31,4 +31,4 @@ You can reference the object that your inspector is referencing with the 'self'*
 *: In groovy too, unfortunately you can't change 'this' reference in groovy scripts  =(
 
 ##How do I extent it?
-If you want to use another language that is not currently implemented, you can just extend inspectorgadget.Executor and implement the abstract methods, then pass this object to inspectorgadget.DefaultInspector.
+If you want to use another language that is not currently implemented, you can just extend [inspectorgadget.Executor](/src/main/java/inspectorgadget/Executor.java) and implement the abstract methods, then pass this object to [inspectorgadget.DefaultInspector](src/main/java/inspectorgadget/defaults/DefaultInspector.java).
