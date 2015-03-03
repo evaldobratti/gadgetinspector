@@ -5,9 +5,9 @@ You will inspect and execute some codes, inspect the states of objects, values o
 
 
 ## How do I install it?
-Currently you must install it in your local repository mannually, so,
+Currently you must install it in your local repository mannually, so here you go,
 ```
-git clone https://github.com/evaldobratti/inspectorgadget & cd inspectorgadget & git checkout 1.0 & mvn install
+git clone https://github.com/evaldobratti/inspectorgadget && cd inspectorgadget && git checkout 1.0 && mvn install
 ```
 
 and add it to your pom
