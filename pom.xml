@@ -6,7 +6,7 @@
 
     <groupId>inpectorgadget</groupId>
     <artifactId>inspector-gadget</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
