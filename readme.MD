@@ -10,16 +10,8 @@ Currently you must install it in your local repository mannually, so here you go
 git clone https://github.com/evaldobratti/inspectorgadget && cd inspectorgadget && git checkout 1.0 && mvn install
 ```
 
-and add it to your pom
-```
-<dependency>
-    <groupId>inpectorgadget</groupId>
-    <artifactId>inspector-gadget-core</artifactId>
-    <version>1.0</version>
-</dependency>
-```
 and choose one implementation, python or groovy.
-```
+```xml
 <dependency>
     <groupId>inpectorgadget</groupId>
     <artifactId>inspector-gadget-groovy</artifactId>
@@ -27,7 +19,7 @@ and choose one implementation, python or groovy.
 </dependency>
 ```
 or
-```
+```xml
 <dependency>
     <groupId>inpectorgadget</groupId>
     <artifactId>inspector-gadget-python</artifactId>
@@ -41,7 +33,7 @@ You will use some windows to interact with the inspector, inspecting and executi
 **CTRL + E**  executes your code  
 **CTRL + I**  inspects your code
 
-It will execute the code that is selected, if there is no code selected, it will the entire script.
+It will execute/inspect the code that is selected, if there is no code selected, it will execute/inspect the entire script.
 
 The project is designed to help you to program your own windows, but it provides you ways to use as it is.
 Just call
@@ -58,7 +50,7 @@ for Python Inspector version.
 
 The inspector will try to solve the imports that your code may use, so, you don't have to explicitly declare imports statements, inspector will search in the classpath, and if only one class with the required name is found, it will solve that dependency for you.
 
-You can reference the object that your inspector is referencing with the 'self'\* keyword.
+You can reference the object that your inspector is referencing with the 'self'\* keyword.  
 *: In groovy too, unfortunately you can't change 'this' reference in groovy scripts  =(
 
 ##How do I extent it?
