@@ -36,6 +36,8 @@ You will use some windows to interact with the inspector, inspecting and executi
 **CTRL + E**  executes your code  
 **CTRL + I**  inspects your code
 
+![Gadget Inspector](https://raw.githubusercontent.com/evaldobratti/inspectorgadget/master/usage.png)
+
 It will execute/inspect the code that is selected, if there is no code selected, it will execute/inspect the entire script.
 
 The project is designed to help you to program your own windows, but it provides you ways to use as it is.
